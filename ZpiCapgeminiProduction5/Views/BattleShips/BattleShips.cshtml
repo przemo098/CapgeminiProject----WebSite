@@ -22,24 +22,20 @@
 
     <script language="JavaScript">
 <!-- Begin
-/* Information used to draw the ships
-*/
+/* Information used to draw the ships*/
 var ship =  [[[1,5], [1,2,5], [1,2,3,5], [1,2,3,4,5]], [[6,10], [6,7,10], [6,7,8,10], [6,7,8,9,10]]];
 
-/* Information used to draw sunk ships
-*/
+/* Information used to draw sunk ships*/
 var dead = [[[201,203], [201,202,203], [201,202,202,203], [201,202,202,202,203]], [[204,206], [204,205,206], [204,205,205,206], [204,205,205,205,206]]];
 
-/* Information used to describe ships
-*/
+/* Information used to describe ships*/
 var shiptypes = [["Minesweeper",2,4],["Frigate",3,4],[ "Cruiser",4,2],[ "Battleship",5,1]];
 
 var gridx = 16, gridy = 16;
 var player = [], computer = [], playersships = [], computersships = [];
 var playerlives = 0, computerlives = 0, playflag=true, statusmsg="";
 
-/* Function to preload all the images, to prevent delays during play
-*/
+/* Preload all the images, to prevent delays during play*/
 var preloaded = [];
 function imagePreload() {
 var i,ids = [1,2,3,4,5,6,7,8,9,10,100,101,102,103,201,202,203,204,205,206];
@@ -52,8 +48,7 @@ preloaded[i] = img;
 window.status = "";
 }
 
-/* Function to place the ships in the grid
-*/
+/* Function to place the ships in the grid*/
 function setupPlayer(ispc) {
 var y,x;
 grid = [];
@@ -115,8 +110,7 @@ shipno++;
 return grid;
 }
 
-/* Function to change an image shown on a grid
-*/
+/* Change an image shown on a grid*/
 function setImage(y,x,id,ispc) {
 if ( ispc ) {
 computer[y][x][0] = id;
@@ -128,8 +122,7 @@ document.images["ply" + y + "_" + x].src = "/Content/Images/batt" + id + ".gif";
    }
 }
 
-/* Function to insert HTML source for a grid
-*/
+/* Function to insert HTML source for a grid*/
 function showGrid(ispc) {
     var y, x;
     document.write('<table style="line-height:0%">');
@@ -148,8 +141,7 @@ document.write('</tr>');
 document.write(' </table>')
 }
 
-/* Handler for clicking on the grid
-*/
+/* Handler for clicking on the grid*/
 function gridClick(y,x) {
 if ( playflag ) {
 if (computer[y][x][0] < 100) {
@@ -180,14 +172,12 @@ var x,y,pass;
 var sx,sy;
 var selected = false;
 
-/* Make two passes during 'shoot to kill' mode
-*/
+/* Make two passes during 'shoot to kill' mode*/
 for (pass=0;pass<2;++pass) {
 for (y=0;y<gridy && !selected;++y) {
 for (x=0;x<gridx && !selected;++x) {
 
-/* Explosion shown at this position
-*/
+/* Explosion shown at this position*/
 if (player[y][x][0]==103) {
 sx=x; sy=y;
 var nup=(y>0 && player[y-1][x][0]<=100);
@@ -196,8 +186,7 @@ var nlt=(x>0 && player[y][x-1][0]<=100);
 var nrt=(x<gridx-1 && player[y][x+1][0]<=100);
 if ( pass == 0 ) {
 /* On first pass look for two explosions
-   in a row - next shot will be inline
-*/
+   in a row - next shot will be inline*/
 var yup=(y>0 && player[y-1][x][0]==103);
 var ydn=(y<gridy-1 && player[y+1][x][0]==103);
 var ylt=(x>0 && player[y][x-1][0]==103);
@@ -208,9 +197,7 @@ else if ( nup && ydn) { sy = y-1; selected=true; }
 else if ( ndn && yup) { sy = y+1; selected=true; }
 }
 else {
-/* Second pass look for single explosion -
-   fire shots all around it
-*/
+/* Second pass look for single explosion -   fire shots all around it*/
 if ( nlt ) { sx=x-1; selected=true; }
 else if ( nrt ) { sx=x+1; selected=true; }
 else if ( nup ) { sy=y-1; selected=true; }
@@ -223,16 +210,14 @@ else if ( ndn ) { sy=y+1; selected=true; }
 if ( !selected ) {
 /* Nothing found in 'shoot to kill' mode, so we're just taking
    potshots. Random shots are in a chequerboard pattern for
-   maximum efficiency, and never twice in the same place
-*/
+   maximum efficiency, and never twice in the same place*/
 do{
 sy = Math.floor(Math.random() * gridy);
 sx = Math.floor(Math.random() * gridx/2)*2+sy%2;
 } while( player[sy][sx][0]>100 );
 }
 if (player[sy][sx][0] < 100) {
-/* Hit something
-*/
+/* Hit something*/
 setImage(sy,sx,103,false);
 var shipno = player[sy][sx][1];
 if ( --playersships[shipno][1] == 0 ) {
@@ -247,14 +232,12 @@ playflag = false;
    }
 }
 else {
-/* Missed
-*/
+/* Missed*/
 setImage(sy,sx,102,false);
    }
 }
 
-/* When whole ship is hit, show it using changed graphics
-*/
+/* When whole ship is hit, show it using changed graphics*/
 function sinkShip(grid,shipno,ispc) {
 var y,x;
 for (y=0;y<gridx;++y) {
@@ -266,8 +249,7 @@ else setImage(y,x,player[y][x][2],false);
    }
 }
 
-/* Show location of all the computers ships - when player has lost
-*/
+/* Show location of all the computers ships - when player has lost*/
 function knowYourEnemy() {
 var y,x;
 for (y=0;y<gridx;++y) {
@@ -280,8 +262,7 @@ setImage(y,x,computer[y][x][0],true);
    }
 }
 
-/* Show how many ships computer has left
-*/
+/* Show how many ships computer has left*/
 function updateStatus() {
 var f=false,i,s = "Computer has ";
 for (i=0;i<computersships.length;++i) {
@@ -297,8 +278,7 @@ window.status = statusmsg;
 function setStatus() {
 window.status = statusmsg;
 }
-/* Start the game!
-*/
+/* Start the game!*/
 imagePreload();
 player = setupPlayer(false);
 computer = setupPlayer(true);
