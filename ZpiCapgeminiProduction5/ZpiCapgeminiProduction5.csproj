@@ -210,6 +210,7 @@
     <Content Include="Views\BattleShips\BattleShips.cshtml" />
     <Content Include="Views\BattleShips\Chat.cshtml" />
     <Content Include="Views\Home\Index.cshtml" />
+    <Content Include="Views\Home\Contact.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

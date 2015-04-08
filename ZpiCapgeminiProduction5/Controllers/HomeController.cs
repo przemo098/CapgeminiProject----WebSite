@@ -13,5 +13,10 @@ namespace ZpiCapgeminiProduction5.Controllers
         {
             return View();
         }
+
+        public ActionResult Contact()
+        {
+            return View();
+        }
     }
 }

@@ -19,21 +19,6 @@
 
 </head>
 <body>
-    <div style="float:inherit;">
-        <img src="../Content/Images/batt100.gif" width="16" height="16" alt="">
-        <img src="../Content/Images/batt100.gif" width="16" height="16" alt="">
-
-        <img src="../Content/Images/batt100.gif" width="16" height="16" alt="">
-    </div>
-    <p>
-        <nobr>
-            Some text some text some text. Some text ...
-        </nobr>
-        <nobr>
-            Some text
-        </nobr>
-    </p>
-
 
     <script language="JavaScript">
 <!-- Begin
@@ -146,16 +131,21 @@ document.images["ply" + y + "_" + x].src = "/Content/Images/batt" + id + ".gif";
 /* Function to insert HTML source for a grid
 */
 function showGrid(ispc) {
-var y,x;
-for (y=0;y<gridy;++y) {
+    var y, x;
+    document.write('<table style="line-height:0%">');
+    for (y=0;y<gridy;++y) {
+        document.write('<tr>');
 for (x=0;x<gridx;++x) {
-if ( ispc )
-    document.write('<a href="javascript:gridClick(' + y + ',' + x + ');"><img name="pc' + y + '_' + x + '" src="../Content/Images/batt100.gif" display:block width=16 height=16></a>');
-else
-    document.write('<a href="javascript:void(0);"><img name="ply' + y + '_' + x + '" src="../Content/Images/batt' + player[y][x][0] + '.gif" display:block width=16 height=16></a>');
+    if (ispc) {
+        document.write('<td><a href="javascript:gridClick(' + y + ',' + x + '); "><img name="pc' + y + '_' + x + '" src="../Content/Images/batt100.gif"  width=16 height=16></a></td>');
+        if (x == gridx - 1) { document.write('<td>&nbsp;&nbsp;&nbsp;</td>'); }
+    }
+    else
+        document.write('<td><a href="javascript:void(0);"><img name="ply' + y + '_' + x + '" src="../Content/Images/batt' + player[y][x][0] + '.gif" display:block width=16 height=16></a></td>');
 }
-document.write('<br />');
-   }
+document.write('</tr>');
+}
+document.write(' </table>')
 }
 
 /* Handler for clicking on the grid
@@ -323,7 +313,7 @@ setInterval("setStatus();", 500);
 //  End -->
     </script>
     <div align="center">
-        <iframe width="640" height="360" src="https://www.youtube.com/embed/OYQRu87PH5g" frameborder="0"></iframe>
+        <iframe width="640" height="360" src="https://www.youtube.com/embed/cg2LN05PXUo" frameborder="0"></iframe>
     </div>
 </body>
 </html>
